@@ -1,29 +1,26 @@
 # Pegasus Taring
 
-Pegasus Taring adalah proyek yang dilengkapi README profil singkat untuk publikasi dan kontak.
+Pegasus Taring adalah identitas proyek dan profil publik milik **Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE**. Semua kepemilikan proyek, publikasi, dan kontak resmi berada atas nama author tersebut.
 
-## Author
+## Author dan Kepemilikan
 
-**Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE**
+- Nama: **Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE**
+- Email resmi: muhammadsobrimaulana31@gmail.com
+- Website utama: https://muhammadsobrimaulana.netlify.app
+- Halaman profil: https://muhammad-sobri-maulana-kvr6a.sevalla.page/
 
 ## GitHub
 
 - https://github.com/sobri3195
 
-## Kontak
-
-- Email: muhammadsobrimaulana31@gmail.com
-- Website utama: https://muhammadsobrimaulana.netlify.app
-- Halaman profil: https://muhammad-sobri-maulana-kvr6a.sevalla.page/
-
-## Media Sosial
+## Media Sosial dan Komunitas
 
 - YouTube: https://www.youtube.com/@muhammadsobrimaulana6013
 - Telegram: https://t.me/winlin_exploit
 - TikTok: https://www.tiktok.com/@dr.sobri
 - Grup WhatsApp: https://chat.whatsapp.com/B8nwRZOBMo64GjTwdXV8Bl
 
-## Dukungan dan Donasi
+## Dukungan, Donasi, dan Karya
 
 - Lynk: https://lynk.id/muhsobrimaulana
 - Trakteer: https://trakteer.id/g9mkave5gauns962u07t
@@ -31,6 +28,6 @@ Pegasus Taring adalah proyek yang dilengkapi README profil singkat untuk publika
 - Nyawer: https://nyawer.co/MuhammadSobriMaulana
 - Gumroad: https://maulanasobri.gumroad.com/
 
-## Toko Online
+## Tautan Tambahan
 
 - Toko Online Sobri: https://pegasus-shop.netlify.app
