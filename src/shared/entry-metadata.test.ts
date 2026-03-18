@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { resolveEmojiAndHomepage } from "./entry-metadata.js";
+import { HOMEPAGE_ALIAS_KEYS, resolveEmojiAndHomepage } from "./entry-metadata.js";
 
 describe("shared/entry-metadata", () => {
   it("prefers metadata emoji and homepage when present", () => {
@@ -47,6 +47,33 @@ describe("shared/entry-metadata", () => {
     });
   });
 
+  it.each(
+    HOMEPAGE_ALIAS_KEYS.filter((key) => !["homepage", "website", "url"].includes(key)).map(
+      (key) => [key],
+    ),
+  )("supports the %s alias in frontmatter", (key) => {
+    expect(
+      resolveEmojiAndHomepage({
+        frontmatter: {
+          [key]: " https://docs.openclaw.ai/skills ",
+        },
+      }),
+    ).toEqual({
+      homepage: "https://docs.openclaw.ai/skills",
+    });
+  });
+
+  it("supports alias fallback in metadata before frontmatter", () => {
+    expect(
+      resolveEmojiAndHomepage({
+        metadata: { documentationUrl: " https://docs.openclaw.ai/hooks " },
+        frontmatter: { homepage: "https://example.com/ignored" },
+      }),
+    ).toEqual({
+      homepage: "https://docs.openclaw.ai/hooks",
+    });
+  });
+
   it("does not fall back once frontmatter homepage aliases are present but blank", () => {
     expect(
       resolveEmojiAndHomepage({
@@ -54,6 +81,7 @@ describe("shared/entry-metadata", () => {
           homepage: " ",
           website: "https://docs.openclaw.ai",
           url: "https://openclaw.ai/install",
+          docsUrl: "https://docs.openclaw.ai/ignored",
         },
       }),
     ).toEqual({});

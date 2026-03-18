@@ -10,6 +10,7 @@ import {
   resolveOpenClawManifestOs,
   resolveOpenClawManifestRequires,
 } from "../shared/frontmatter.js";
+import { resolveHomepageFromAliases } from "../shared/entry-metadata.js";
 import type {
   OpenClawHookMetadata,
   HookEntry,
@@ -58,7 +59,7 @@ export function resolveOpenClawMetadata(
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,
     emoji: typeof metadataObj.emoji === "string" ? metadataObj.emoji : undefined,
-    homepage: typeof metadataObj.homepage === "string" ? metadataObj.homepage : undefined,
+    homepage: resolveHomepageFromAliases(metadataObj),
     hookKey: typeof metadataObj.hookKey === "string" ? metadataObj.hookKey : undefined,
     export: typeof metadataObj.export === "string" ? metadataObj.export : undefined,
     os: osRaw.length > 0 ? osRaw : undefined,

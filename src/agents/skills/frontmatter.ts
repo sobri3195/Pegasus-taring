@@ -12,6 +12,7 @@ import {
   resolveOpenClawManifestOs,
   resolveOpenClawManifestRequires,
 } from "../../shared/frontmatter.js";
+import { resolveHomepageFromAliases } from "../../shared/entry-metadata.js";
 import type {
   OpenClawSkillMetadata,
   ParsedSkillFrontmatter,
@@ -196,7 +197,7 @@ export function resolveOpenClawMetadata(
   return {
     always: typeof metadataObj.always === "boolean" ? metadataObj.always : undefined,
     emoji: typeof metadataObj.emoji === "string" ? metadataObj.emoji : undefined,
-    homepage: typeof metadataObj.homepage === "string" ? metadataObj.homepage : undefined,
+    homepage: resolveHomepageFromAliases(metadataObj),
     skillKey: typeof metadataObj.skillKey === "string" ? metadataObj.skillKey : undefined,
     primaryEnv: typeof metadataObj.primaryEnv === "string" ? metadataObj.primaryEnv : undefined,
     os: osRaw.length > 0 ? osRaw : undefined,

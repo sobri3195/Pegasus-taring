@@ -276,6 +276,26 @@ metadata:
     expect(openclaw?.emoji).toBe("disk");
     expect(openclaw?.events).toEqual(["command:new"]);
   });
+
+  it("accepts documentation aliases from metadata", () => {
+    const frontmatter = {
+      metadata:
+        '{"openclaw":{"docs":" https://docs.openclaw.ai/automation/hooks ","projectUrl":"https://example.com/ignored","events":["command"]}}',
+    };
+
+    const result = resolveOpenClawMetadata(frontmatter);
+    expect(result?.homepage).toBe("https://docs.openclaw.ai/automation/hooks");
+  });
+
+  it("treats blank higher-priority aliases as an intentional override", () => {
+    const frontmatter = {
+      metadata:
+        '{"openclaw":{"homepage":" ","documentationUrl":"https://docs.openclaw.ai/ignored","events":["command"]}}',
+    };
+
+    const result = resolveOpenClawMetadata(frontmatter);
+    expect(result?.homepage).toBeUndefined();
+  });
 });
 
 describe("resolveHookInvocationPolicy", () => {
