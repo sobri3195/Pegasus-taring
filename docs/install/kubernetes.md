@@ -1,18 +1,18 @@
 ---
-summary: "Deploy OpenClaw Gateway to a Kubernetes cluster with Kustomize"
+summary: "Deploy Pegasustaring Gateway to a Kubernetes cluster with Kustomize"
 read_when:
-  - You want to run OpenClaw on a Kubernetes cluster
-  - You want to test OpenClaw in a Kubernetes environment
+  - You want to run Pegasustaring on a Kubernetes cluster
+  - You want to test Pegasustaring in a Kubernetes environment
 title: "Kubernetes"
 ---
 
-# OpenClaw on Kubernetes
+# Pegasustaring on Kubernetes
 
-A minimal starting point for running OpenClaw on Kubernetes — not a production-ready deployment. It covers the core resources and is meant to be adapted to your environment.
+A minimal starting point for running Pegasustaring on Kubernetes — not a production-ready deployment. It covers the core resources and is meant to be adapted to your environment.
 
 ## Why not Helm?
 
-OpenClaw is a single container with some config files. The interesting customization is in agent content (markdown files, skills, config overrides), not infrastructure templating. Kustomize handles overlays without the overhead of a Helm chart. If your deployment grows more complex, a Helm chart can be layered on top of these manifests.
+Pegasustaring is a single container with some config files. The interesting customization is in agent content (markdown files, skills, config overrides), not infrastructure templating. Kustomize handles overlays without the overhead of a Helm chart. If your deployment grows more complex, a Helm chart can be layered on top of these manifests.
 
 ## What you need
 
@@ -27,14 +27,14 @@ OpenClaw is a single container with some config files. The interesting customiza
 export <PROVIDER>_API_KEY="..."
 ./scripts/k8s/deploy.sh
 
-kubectl port-forward svc/openclaw 18789:18789 -n openclaw
+kubectl port-forward svc/pegasus-taring 18789:18789 -n pegasus-taring
 open http://localhost:18789
 ```
 
 Retrieve the gateway token and paste it into the Control UI:
 
 ```bash
-kubectl get secret openclaw-secrets -n openclaw -o jsonpath='{.data.OPENCLAW_GATEWAY_TOKEN}' | base64 -d
+kubectl get secret pegasus-taring-secrets -n pegasus-taring -o jsonpath='{.data.OPENCLAW_GATEWAY_TOKEN}' | base64 -d
 ```
 
 For local debugging, `./scripts/k8s/deploy.sh --show-token` prints the token after deploy.
@@ -77,19 +77,19 @@ Use `--show-token` with either command if you want the token printed to stdout f
 ### 2) Access the gateway
 
 ```bash
-kubectl port-forward svc/openclaw 18789:18789 -n openclaw
+kubectl port-forward svc/pegasus-taring 18789:18789 -n pegasus-taring
 open http://localhost:18789
 ```
 
 ## What gets deployed
 
 ```
-Namespace: openclaw (configurable via OPENCLAW_NAMESPACE)
-├── Deployment/openclaw        # Single pod, init container + gateway
-├── Service/openclaw           # ClusterIP on port 18789
+Namespace: pegasus-taring (configurable via OPENCLAW_NAMESPACE)
+├── Deployment/pegasus-taring        # Single pod, init container + gateway
+├── Service/pegasus-taring           # ClusterIP on port 18789
 ├── PersistentVolumeClaim      # 10Gi for agent state and config
-├── ConfigMap/openclaw-config  # openclaw.json + AGENTS.md
-└── Secret/openclaw-secrets    # Gateway token + API keys
+├── ConfigMap/pegasus-taring-config  # pegasus-taring.json + AGENTS.md
+└── Secret/pegasus-taring-secrets    # Gateway token + API keys
 ```
 
 ## Customization
@@ -104,7 +104,7 @@ Edit the `AGENTS.md` in `scripts/k8s/manifests/configmap.yaml` and redeploy:
 
 ### Gateway config
 
-Edit `openclaw.json` in `scripts/k8s/manifests/configmap.yaml`. See [Gateway configuration](/gateway/configuration) for the full reference.
+Edit `pegasus-taring.json` in `scripts/k8s/manifests/configmap.yaml`. See [Gateway configuration](/gateway/configuration) for the full reference.
 
 ### Add providers
 
@@ -122,9 +122,9 @@ Existing provider keys stay in the Secret unless you overwrite them.
 Or patch the Secret directly:
 
 ```bash
-kubectl patch secret openclaw-secrets -n openclaw \
+kubectl patch secret pegasus-taring-secrets -n pegasus-taring \
   -p '{"stringData":{"<PROVIDER>_API_KEY":"..."}}'
-kubectl rollout restart deployment/openclaw -n openclaw
+kubectl rollout restart deployment/pegasus-taring -n pegasus-taring
 ```
 
 ### Custom namespace
@@ -138,7 +138,7 @@ OPENCLAW_NAMESPACE=my-namespace ./scripts/k8s/deploy.sh
 Edit the `image` field in `scripts/k8s/manifests/deployment.yaml`:
 
 ```yaml
-image: ghcr.io/openclaw/openclaw:2026.3.1
+image: ghcr.io/pegasus-taring/pegasus-taring:2026.3.1
 ```
 
 ### Expose beyond port-forward
@@ -184,7 +184,7 @@ scripts/k8s/
 ├── create-kind.sh              # Local Kind cluster (auto-detects docker/podman)
 └── manifests/
     ├── kustomization.yaml      # Kustomize base
-    ├── configmap.yaml          # openclaw.json + AGENTS.md
+    ├── configmap.yaml          # pegasus-taring.json + AGENTS.md
     ├── deployment.yaml         # Pod spec with security hardening
     ├── pvc.yaml                # 10Gi persistent storage
     └── service.yaml            # ClusterIP on 18789

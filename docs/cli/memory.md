@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `openclaw memory` (status/index/search)"
+summary: "CLI reference for `pegasus-taring memory` (status/index/search)"
 read_when:
   - You want to index or search semantic memory
   - You’re debugging memory availability or indexing
 title: "memory"
 ---
 
-# `openclaw memory`
+# `pegasus-taring memory`
 
 Manage semantic memory indexing and search.
 Provided by the active memory plugin (default: `memory-core`; set `plugins.slots.memory = "none"` to disable).
@@ -19,16 +19,16 @@ Related:
 ## Examples
 
 ```bash
-openclaw memory status
-openclaw memory status --deep
-openclaw memory index --force
-openclaw memory search "meeting notes"
-openclaw memory search --query "deployment" --max-results 20
-openclaw memory status --json
-openclaw memory status --deep --index
-openclaw memory status --deep --index --verbose
-openclaw memory status --agent main
-openclaw memory index --agent main --verbose
+pegasus-taring memory status
+pegasus-taring memory status --deep
+pegasus-taring memory index --force
+pegasus-taring memory search "meeting notes"
+pegasus-taring memory search --query "deployment" --max-results 20
+pegasus-taring memory status --json
+pegasus-taring memory status --deep --index
+pegasus-taring memory status --deep --index --verbose
+pegasus-taring memory status --agent main
+pegasus-taring memory index --agent main --verbose
 ```
 
 ## Options

@@ -1,26 +1,26 @@
 ---
-summary: "CLI reference for `openclaw daemon` (legacy alias for gateway service management)"
+summary: "CLI reference for `pegasus-taring daemon` (legacy alias for gateway service management)"
 read_when:
-  - You still use `openclaw daemon ...` in scripts
+  - You still use `pegasus-taring daemon ...` in scripts
   - You need service lifecycle commands (install/start/stop/restart/status)
 title: "daemon"
 ---
 
-# `openclaw daemon`
+# `pegasus-taring daemon`
 
 Legacy alias for Gateway service management commands.
 
-`openclaw daemon ...` maps to the same service control surface as `openclaw gateway ...` service commands.
+`pegasus-taring daemon ...` maps to the same service control surface as `pegasus-taring gateway ...` service commands.
 
 ## Usage
 
 ```bash
-openclaw daemon status
-openclaw daemon install
-openclaw daemon start
-openclaw daemon stop
-openclaw daemon restart
-openclaw daemon uninstall
+pegasus-taring daemon status
+pegasus-taring daemon install
+pegasus-taring daemon start
+pegasus-taring daemon stop
+pegasus-taring daemon restart
+pegasus-taring daemon uninstall
 ```
 
 ## Subcommands
@@ -50,4 +50,4 @@ Notes:
 
 ## Prefer
 
-Use [`openclaw gateway`](/cli/gateway) for current docs and examples.
+Use [`pegasus-taring gateway`](/cli/gateway) for current docs and examples.

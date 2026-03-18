@@ -1,15 +1,15 @@
 ---
-summary: "CLI reference for `openclaw docs` (search the live docs index)"
+summary: "CLI reference for `pegasus-taring docs` (search the live docs index)"
 read_when:
-  - You want to search the live OpenClaw docs from the terminal
+  - You want to search the live Pegasustaring docs from the terminal
 title: "docs"
 ---
 
-# `openclaw docs`
+# `pegasus-taring docs`
 
 Search the live docs index.
 
 ```bash
-openclaw docs browser existing-session
-openclaw docs sandbox allowHostControl
+pegasus-taring docs browser existing-session
+pegasus-taring docs sandbox allowHostControl
 ```
