@@ -273,15 +273,15 @@
     },
     {
       "source": "/clawd",
-      "destination": "/start/openclaw"
+      "destination": "/start/pegasus-taring"
     },
     {
       "source": "/start/clawd",
-      "destination": "/start/openclaw"
+      "destination": "/start/pegasus-taring"
     },
     {
       "source": "/start/clawd/",
-      "destination": "/start/openclaw"
+      "destination": "/start/pegasus-taring"
     },
     {
       "source": "/start/pairing",
@@ -848,7 +848,7 @@
               {
                 "group": "Guides",
                 "pages": [
-                  "start/openclaw",
+                  "start/pegasus-taring",
                   "start/wizard-cli-reference",
                   "start/wizard-cli-automation"
                 ]

@@ -1,78 +1,78 @@
 ---
-summary: "CLI reference for `openclaw devices` (device pairing + token rotation/revocation)"
+summary: "CLI reference for `pegasus-taring devices` (device pairing + token rotation/revocation)"
 read_when:
   - You are approving device pairing requests
   - You need to rotate or revoke device tokens
 title: "devices"
 ---
 
-# `openclaw devices`
+# `pegasus-taring devices`
 
 Manage device pairing requests and device-scoped tokens.
 
 ## Commands
 
-### `openclaw devices list`
+### `pegasus-taring devices list`
 
 List pending pairing requests and paired devices.
 
 ```
-openclaw devices list
-openclaw devices list --json
+pegasus-taring devices list
+pegasus-taring devices list --json
 ```
 
-### `openclaw devices remove <deviceId>`
+### `pegasus-taring devices remove <deviceId>`
 
 Remove one paired device entry.
 
 ```
-openclaw devices remove <deviceId>
-openclaw devices remove <deviceId> --json
+pegasus-taring devices remove <deviceId>
+pegasus-taring devices remove <deviceId> --json
 ```
 
-### `openclaw devices clear --yes [--pending]`
+### `pegasus-taring devices clear --yes [--pending]`
 
 Clear paired devices in bulk.
 
 ```
-openclaw devices clear --yes
-openclaw devices clear --yes --pending
-openclaw devices clear --yes --pending --json
+pegasus-taring devices clear --yes
+pegasus-taring devices clear --yes --pending
+pegasus-taring devices clear --yes --pending --json
 ```
 
-### `openclaw devices approve [requestId] [--latest]`
+### `pegasus-taring devices approve [requestId] [--latest]`
 
-Approve a pending device pairing request. If `requestId` is omitted, OpenClaw
+Approve a pending device pairing request. If `requestId` is omitted, Pegasustaring
 automatically approves the most recent pending request.
 
 ```
-openclaw devices approve
-openclaw devices approve <requestId>
-openclaw devices approve --latest
+pegasus-taring devices approve
+pegasus-taring devices approve <requestId>
+pegasus-taring devices approve --latest
 ```
 
-### `openclaw devices reject <requestId>`
+### `pegasus-taring devices reject <requestId>`
 
 Reject a pending device pairing request.
 
 ```
-openclaw devices reject <requestId>
+pegasus-taring devices reject <requestId>
 ```
 
-### `openclaw devices rotate --device <id> --role <role> [--scope <scope...>]`
+### `pegasus-taring devices rotate --device <id> --role <role> [--scope <scope...>]`
 
 Rotate a device token for a specific role (optionally updating scopes).
 
 ```
-openclaw devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
+pegasus-taring devices rotate --device <deviceId> --role operator --scope operator.read --scope operator.write
 ```
 
-### `openclaw devices revoke --device <id> --role <role>`
+### `pegasus-taring devices revoke --device <id> --role <role>`
 
 Revoke a device token for a specific role.
 
 ```
-openclaw devices revoke --device <deviceId> --role node
+pegasus-taring devices revoke --device <deviceId> --role node
 ```
 
 ## Common options
@@ -100,27 +100,27 @@ Use this when Control UI or other clients keep failing with `AUTH_TOKEN_MISMATCH
 1. Confirm current gateway token source:
 
 ```bash
-openclaw config get gateway.auth.token
+pegasus-taring config get gateway.auth.token
 ```
 
 2. List paired devices and identify the affected device id:
 
 ```bash
-openclaw devices list
+pegasus-taring devices list
 ```
 
 3. Rotate operator token for the affected device:
 
 ```bash
-openclaw devices rotate --device <deviceId> --role operator
+pegasus-taring devices rotate --device <deviceId> --role operator
 ```
 
 4. If rotation is not enough, remove stale pairing and approve again:
 
 ```bash
-openclaw devices remove <deviceId>
-openclaw devices list
-openclaw devices approve <requestId>
+pegasus-taring devices remove <deviceId>
+pegasus-taring devices list
+pegasus-taring devices approve <requestId>
 ```
 
 5. Retry client connection with the current shared token/password.

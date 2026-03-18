@@ -1,12 +1,12 @@
 ---
-summary: "CLI reference for `openclaw plugins` (list, install, marketplace, uninstall, enable/disable, doctor)"
+summary: "CLI reference for `pegasus-taring plugins` (list, install, marketplace, uninstall, enable/disable, doctor)"
 read_when:
   - You want to install or manage Gateway plugins or compatible bundles
   - You want to debug plugin load failures
 title: "plugins"
 ---
 
-# `openclaw plugins`
+# `pegasus-taring plugins`
 
 Manage Gateway plugins/extensions and compatible bundles.
 
@@ -20,36 +20,36 @@ Related:
 ## Commands
 
 ```bash
-openclaw plugins list
-openclaw plugins install <path-or-spec>
-openclaw plugins inspect <id>
-openclaw plugins enable <id>
-openclaw plugins disable <id>
-openclaw plugins uninstall <id>
-openclaw plugins doctor
-openclaw plugins update <id>
-openclaw plugins update --all
-openclaw plugins marketplace list <marketplace>
+pegasus-taring plugins list
+pegasus-taring plugins install <path-or-spec>
+pegasus-taring plugins inspect <id>
+pegasus-taring plugins enable <id>
+pegasus-taring plugins disable <id>
+pegasus-taring plugins uninstall <id>
+pegasus-taring plugins doctor
+pegasus-taring plugins update <id>
+pegasus-taring plugins update --all
+pegasus-taring plugins marketplace list <marketplace>
 ```
 
-Bundled plugins ship with OpenClaw but start disabled. Use `plugins enable` to
+Bundled plugins ship with Pegasustaring but start disabled. Use `plugins enable` to
 activate them.
 
-Native OpenClaw plugins must ship `openclaw.plugin.json` with an inline JSON
+Native Pegasustaring plugins must ship `pegasus-taring.plugin.json` with an inline JSON
 Schema (`configSchema`, even if empty). Compatible bundles use their own bundle
 manifests instead.
 
-`plugins list` shows `Format: openclaw` or `Format: bundle`. Verbose list/info
+`plugins list` shows `Format: pegasus-taring` or `Format: bundle`. Verbose list/info
 output also shows the bundle subtype (`codex`, `claude`, or `cursor`) plus detected bundle
 capabilities.
 
 ### Install
 
 ```bash
-openclaw plugins install <path-or-spec>
-openclaw plugins install <npm-spec> --pin
-openclaw plugins install <plugin>@<marketplace>
-openclaw plugins install <plugin> --marketplace <marketplace>
+pegasus-taring plugins install <path-or-spec>
+pegasus-taring plugins install <npm-spec> --pin
+pegasus-taring plugins install <plugin>@<marketplace>
+pegasus-taring plugins install <plugin> --marketplace <marketplace>
 ```
 
 Security note: treat plugin installs like running code. Prefer pinned versions.
@@ -59,11 +59,11 @@ Npm specs are **registry-only** (package name + optional **exact version** or
 installs run with `--ignore-scripts` for safety.
 
 Bare specs and `@latest` stay on the stable track. If npm resolves either of
-those to a prerelease, OpenClaw stops and asks you to opt in explicitly with a
+those to a prerelease, Pegasustaring stops and asks you to opt in explicitly with a
 prerelease tag such as `@beta`/`@rc` or an exact prerelease version such as
 `@1.2.3-beta.4`.
 
-If a bare install spec matches a bundled plugin id (for example `diffs`), OpenClaw
+If a bare install spec matches a bundled plugin id (for example `diffs`), Pegasustaring
 installs the bundled plugin directly. To install an npm package with the same
 name, use an explicit scoped spec (for example `@scope/diffs`).
 
@@ -75,16 +75,16 @@ Use `plugin@marketplace` shorthand when the marketplace name exists in Claude's
 local registry cache at `~/.claude/plugins/known_marketplaces.json`:
 
 ```bash
-openclaw plugins marketplace list <marketplace-name>
-openclaw plugins install <plugin-name>@<marketplace-name>
+pegasus-taring plugins marketplace list <marketplace-name>
+pegasus-taring plugins install <plugin-name>@<marketplace-name>
 ```
 
 Use `--marketplace` when you want to pass the marketplace source explicitly:
 
 ```bash
-openclaw plugins install <plugin-name> --marketplace <marketplace-name>
-openclaw plugins install <plugin-name> --marketplace <owner/repo>
-openclaw plugins install <plugin-name> --marketplace ./my-marketplace
+pegasus-taring plugins install <plugin-name> --marketplace <marketplace-name>
+pegasus-taring plugins install <plugin-name> --marketplace <owner/repo>
+pegasus-taring plugins install <plugin-name> --marketplace ./my-marketplace
 ```
 
 Marketplace sources can be:
@@ -94,9 +94,9 @@ Marketplace sources can be:
 - a GitHub repo shorthand such as `owner/repo`
 - a git URL
 
-For local paths and archives, OpenClaw auto-detects:
+For local paths and archives, Pegasustaring auto-detects:
 
-- native OpenClaw plugins (`openclaw.plugin.json`)
+- native Pegasustaring plugins (`pegasus-taring.plugin.json`)
 - Codex-compatible bundles (`.codex-plugin/plugin.json`)
 - Claude-compatible bundles (`.claude-plugin/plugin.json` or the default Claude
   component layout)
@@ -111,7 +111,7 @@ diagnostics/info but are not yet wired into runtime execution.
 Use `--link` to avoid copying a local directory (adds to `plugins.load.paths`):
 
 ```bash
-openclaw plugins install -l ./my-plugin
+pegasus-taring plugins install -l ./my-plugin
 ```
 
 Use `--pin` on npm installs to save the resolved exact spec (`name@version`) in
@@ -120,9 +120,9 @@ Use `--pin` on npm installs to save the resolved exact spec (`name@version`) in
 ### Uninstall
 
 ```bash
-openclaw plugins uninstall <id>
-openclaw plugins uninstall <id> --dry-run
-openclaw plugins uninstall <id> --keep-files
+pegasus-taring plugins uninstall <id>
+pegasus-taring plugins uninstall <id> --dry-run
+pegasus-taring plugins uninstall <id> --keep-files
 ```
 
 `uninstall` removes plugin records from `plugins.entries`, `plugins.installs`,
@@ -138,23 +138,23 @@ state dir extensions root (`$OPENCLAW_STATE_DIR/extensions/<id>`). Use
 ### Update
 
 ```bash
-openclaw plugins update <id>
-openclaw plugins update --all
-openclaw plugins update <id> --dry-run
+pegasus-taring plugins update <id>
+pegasus-taring plugins update --all
+pegasus-taring plugins update <id> --dry-run
 ```
 
 Updates apply to tracked installs in `plugins.installs`, currently npm and
 marketplace installs.
 
 When a stored integrity hash exists and the fetched artifact hash changes,
-OpenClaw prints a warning and asks for confirmation before proceeding. Use
+Pegasustaring prints a warning and asks for confirmation before proceeding. Use
 global `--yes` to bypass prompts in CI/non-interactive runs.
 
 ### Inspect
 
 ```bash
-openclaw plugins inspect <id>
-openclaw plugins inspect <id> --json
+pegasus-taring plugins inspect <id>
+pegasus-taring plugins inspect <id> --json
 ```
 
 Deep introspection for a single plugin. Shows identity, load status, source,

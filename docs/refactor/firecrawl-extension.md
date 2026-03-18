@@ -131,7 +131,7 @@ Inputs:
 Behavior:
 
 - Calls Firecrawl `v2/search`
-- Returns normalized OpenClaw-friendly result objects:
+- Returns normalized Pegasustaring-friendly result objects:
   - `title`
   - `url`
   - `snippet`
@@ -177,7 +177,7 @@ Why explicit scrape tool:
 ## What the extension should not do
 
 - No auto-adding `browser`, `web_search`, or `web_fetch` to `tools.alsoAllow`
-- No default onboarding step in `openclaw setup`
+- No default onboarding step in `pegasus-taring setup`
 - No Firecrawl-specific browser session lifecycle in core
 - No change to built-in `web_fetch` fallback semantics in the extension MVP
 
