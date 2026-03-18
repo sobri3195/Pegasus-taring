@@ -2,6 +2,12 @@
 
 Pegasus Taring adalah identitas proyek dan profil publik milik **Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE**. Semua kepemilikan proyek, publikasi, dan kontak resmi berada atas nama author tersebut.
 
+## Posisi Rebrand
+
+- Nama publik proyek: **Pegasus Taring**
+- Nama perintah CLI utama: **`pegasus-taring`**
+- Alias kompatibilitas lama: **`openclaw`** masih dipertahankan agar workflow lama tidak langsung rusak
+
 ## Author dan Kepemilikan
 
 - Nama: **Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE**
@@ -12,6 +18,21 @@ Pegasus Taring adalah identitas proyek dan profil publik milik **Lettu Kes dr. M
 ## GitHub
 
 - https://github.com/sobri3195
+- Repository: https://github.com/sobri3195/pegasus-taring
+
+## Contoh Penggunaan CLI
+
+```bash
+pegasus-taring --help
+pegasus-taring --version
+```
+
+Jika lingkungan Anda masih memakai nama lama, alias berikut tetap bisa dipakai sementara:
+
+```bash
+openclaw --help
+openclaw --version
+```
 
 ## Media Sosial dan Komunitas
 

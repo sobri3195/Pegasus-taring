@@ -14,7 +14,8 @@
     "url": "https://github.com/sobri3195/pegasus-taring.git"
   },
   "bin": {
-    "pegasus-taring": "openclaw.mjs"
+    "pegasus-taring": "pegasus-taring.mjs",
+    "openclaw": "openclaw.mjs"
   },
   "directories": {
     "doc": "docs",
@@ -23,6 +24,7 @@
   "files": [
     "CHANGELOG.md",
     "LICENSE",
+    "pegasus-taring.mjs",
     "openclaw.mjs",
     "README-header.png",
     "README.md",
@@ -486,7 +488,7 @@
       "types": "./dist/plugin-sdk/secret-input-schema.d.ts",
       "default": "./dist/plugin-sdk/secret-input-schema.js"
     },
-    "./cli-entry": "./openclaw.mjs"
+    "./cli-entry": "./pegasus-taring.mjs"
   },
   "scripts": {
     "android:assemble": "cd apps/android && ./gradlew :app:assembleDebug",
@@ -633,7 +635,9 @@
     "tui:dev": "OPENCLAW_PROFILE=dev CLAWDBOT_PROFILE=dev node scripts/run-node.mjs --dev tui",
     "ui:build": "node scripts/ui.js build",
     "ui:dev": "node scripts/ui.js dev",
-    "ui:install": "node scripts/ui.js install"
+    "ui:install": "node scripts/ui.js install",
+    "pegasus-taring": "node scripts/run-node.mjs",
+    "pegasus-taring:rpc": "node scripts/run-node.mjs agent --mode rpc --json"
   },
   "dependencies": {
     "@agentclientprotocol/sdk": "0.16.1",
