@@ -65,3 +65,23 @@ describe("resolveOpenClawMetadata install validation", () => {
     expect(install).toBeUndefined();
   });
 });
+
+describe("resolveOpenClawMetadata homepage aliases", () => {
+  it("accepts documentation aliases from metadata", () => {
+    const metadata = resolveOpenClawMetadata({
+      metadata:
+        '{"openclaw":{"documentation":" https://docs.openclaw.ai/tools/skills ","docsUrl":"https://example.com/ignored"}}',
+    });
+
+    expect(metadata?.homepage).toBe("https://docs.openclaw.ai/tools/skills");
+  });
+
+  it("treats blank higher-priority aliases as an intentional override", () => {
+    const metadata = resolveOpenClawMetadata({
+      metadata:
+        '{"openclaw":{"homepage":" ","documentationUrl":"https://docs.openclaw.ai/ignored"}}',
+    });
+
+    expect(metadata?.homepage).toBeUndefined();
+  });
+});
