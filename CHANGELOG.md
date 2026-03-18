@@ -35,6 +35,7 @@ Docs: https://docs.openclaw.ai
 - Models/OpenAI: add native forward-compat support for `gpt-5.4-mini` and `gpt-5.4-nano` in the OpenAI provider catalog, runtime resolution, and reasoning capability gates. Thanks @vincentkoc.
 - Plugins/bundles: make enabled bundle MCP servers expose runnable tools in embedded Pi, and default relative bundle MCP launches to the bundle root so marketplace bundles like Context7 work through Pi instead of stopping at config import.
 - Scope message SecretRef resolution and harden doctor/status paths. (#48728) Thanks @joshavant.
+- Branding/CLI: promote `pegasus-taring` as the primary package and CLI name, add a compatibility shim for `openclaw`, and align the bootstrap entrypoint/export surface with the new branding.
 - Plugins/testing: add a public `openclaw/plugin-sdk/testing` seam for plugin-author test helpers, and move bundled-extension-only test bridges out of `extensions/` into private repo test helpers.
 - Plugins/Chutes: add a bundled Chutes provider with plugin-owned OAuth/API-key auth, dynamic model discovery, and default-on extension wiring. (#41416) Thanks @Veightor.
 - Plugins/binding: add `onConversationBindingResolved(...)` so plugins can react immediately after bind approvals or denies without blocking channel interaction acknowledgements. (#48678) Thanks @huntharo.
