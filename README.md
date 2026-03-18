@@ -2,6 +2,33 @@
 
 Pegasus Taring adalah platform gateway, automasi, dan orkestrasi multi-kanal berbasis TypeScript. Proyek ini menyatukan CLI, layanan gateway, antarmuka web, aplikasi desktop/mobile, sistem plugin, serta modul agen untuk membangun alur kerja pesan, AI, media, dan integrasi lintas kanal dalam satu codebase.
 
+## Author dan Kontak
+
+- **Author:** Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE
+- **GitHub:** https://github.com/sobri3195
+- **Email:** muhammadsobrimaulana31@gmail.com
+- **Website:** https://muhammadsobrimaulana.netlify.app
+
+## Social Media dan Komunitas
+
+- **YouTube:** https://www.youtube.com/@muhammadsobrimaulana6013
+- **Telegram:** https://t.me/winlin_exploit
+- **TikTok:** https://www.tiktok.com/@dr.sobri
+- **WhatsApp Group:** https://chat.whatsapp.com/B8nwRZOBMo64GjTwdXV8Bl
+
+## Dukungan dan Donasi
+
+- **Lynk.id:** https://lynk.id/muhsobrimaulana
+- **Trakteer:** https://trakteer.id/g9mkave5gauns962u07t
+- **Gumroad:** https://maulanasobri.gumroad.com/
+- **KaryaKarsa:** https://karyakarsa.com/muhammadsobrimaulana
+- **Nyawer:** https://nyawer.co/MuhammadSobriMaulana
+
+## Tautan Tambahan
+
+- **Sevalla Page:** https://muhammad-sobri-maulana-kvr6a.sevalla.page/
+- **Toko Online Sobri:** https://pegasus-shop.netlify.app
+
 ## Fitur Utama
 
 - Gateway multi-kanal untuk menghubungkan alur komunikasi, pairing perangkat, routing, dan status layanan.
