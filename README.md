@@ -6,7 +6,7 @@ Pegasus Taring adalah identitas proyek dan profil publik milik **Lettu Kes dr. M
 
 - Nama publik proyek: **Pegasus Taring**
 - Nama perintah CLI utama: **`pegasus-taring`**
-- Alias kompatibilitas lama: **`openclaw`** masih dipertahankan agar workflow lama tidak langsung rusak
+- Alias kompatibilitas lama: **`openclaw`** masih dipertahankan sementara agar workflow lama tidak langsung rusak
 
 ## Author dan Kepemilikan
 
