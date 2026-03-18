@@ -1,20 +1,20 @@
 {
-  "name": "openclaw",
+  "name": "pegasus-taring",
   "version": "2026.3.14",
-  "description": "Multi-channel AI gateway with extensible messaging integrations",
+  "description": "Pegasus Taring multi-channel gateway and public profile for Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE",
   "keywords": [],
-  "homepage": "https://github.com/openclaw/openclaw#readme",
+  "homepage": "https://muhammadsobrimaulana.netlify.app",
   "bugs": {
-    "url": "https://github.com/openclaw/openclaw/issues"
+    "url": "mailto:muhammadsobrimaulana31@gmail.com"
   },
   "license": "MIT",
-  "author": "",
+  "author": "Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE <muhammadsobrimaulana31@gmail.com> (https://muhammadsobrimaulana.netlify.app)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/openclaw/openclaw.git"
+    "url": "https://github.com/sobri3195/pegasus-taring.git"
   },
   "bin": {
-    "openclaw": "openclaw.mjs"
+    "pegasus-taring": "openclaw.mjs"
   },
   "directories": {
     "doc": "docs",
@@ -768,5 +768,27 @@
         }
       }
     }
-  }
+  },
+  "funding": [
+    {
+      "type": "Lynk",
+      "url": "https://lynk.id/muhsobrimaulana"
+    },
+    {
+      "type": "Trakteer",
+      "url": "https://trakteer.id/g9mkave5gauns962u07t"
+    },
+    {
+      "type": "KaryaKarsa",
+      "url": "https://karyakarsa.com/muhammadsobrimaulana"
+    },
+    {
+      "type": "Nyawer",
+      "url": "https://nyawer.co/MuhammadSobriMaulana"
+    },
+    {
+      "type": "Gumroad",
+      "url": "https://maulanasobri.gumroad.com/"
+    }
+  ]
 }
