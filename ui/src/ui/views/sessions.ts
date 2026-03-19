@@ -2,6 +2,7 @@ import { html, nothing } from "lit";
 import { formatRelativeTimestamp } from "../format.ts";
 import { icons } from "../icons.ts";
 import { pathForTab } from "../navigation.ts";
+import { buildSessionsCsv, downloadSessionsCsv } from "./sessions-export.ts";
 import { formatSessionTokens } from "../presenter.ts";
 import type { GatewaySessionRow, SessionsListResult } from "../types.ts";
 
@@ -127,18 +128,71 @@ function resolveThinkLevelPatchValue(value: string, isBinary: boolean): string |
   return value;
 }
 
+function rowText(row: GatewaySessionRow): string {
+  return [row.key, row.label, row.kind, row.displayName, row.modelProvider, row.model]
+    .filter((value): value is string => typeof value === "string" && value.trim().length > 0)
+    .join(" ")
+    .toLowerCase();
+}
+
+function rowHasTokens(row: GatewaySessionRow): boolean {
+  return Boolean((row.totalTokens ?? row.inputTokens ?? row.outputTokens ?? 0) > 0);
+}
+
+function rowHasLabel(row: GatewaySessionRow): boolean {
+  return Boolean(typeof row.label === "string" && row.label.trim().length > 0);
+}
+
+function matchesSessionToken(row: GatewaySessionRow, rawToken: string): boolean {
+  const token = rawToken.trim().toLowerCase();
+  if (!token) {
+    return true;
+  }
+  if (!token.includes(":")) {
+    return rowText(row).includes(token);
+  }
+
+  const [key, ...rest] = token.split(":");
+  const value = rest.join(":").trim();
+  switch (key) {
+    case "key":
+      return (row.key ?? "").toLowerCase().includes(value);
+    case "label":
+      return (row.label ?? "").toLowerCase().includes(value);
+    case "kind":
+      return (row.kind ?? "").toLowerCase() === value;
+    case "provider":
+      return (row.modelProvider ?? "").toLowerCase().includes(value);
+    case "model":
+      return (row.model ?? "").toLowerCase().includes(value);
+    case "name":
+      return (row.displayName ?? "").toLowerCase().includes(value);
+    case "has":
+      if (value === "label") {
+        return rowHasLabel(row);
+      }
+      if (value === "tokens") {
+        return rowHasTokens(row);
+      }
+      if (value === "thinking") {
+        return Boolean(row.thinkingLevel);
+      }
+      return false;
+    default:
+      return rowText(row).includes(token);
+  }
+}
+
 function filterRows(rows: GatewaySessionRow[], query: string): GatewaySessionRow[] {
-  const q = query.trim().toLowerCase();
-  if (!q) {
+  const tokens = query
+    .trim()
+    .split(/\s+/u)
+    .map((token) => token.trim())
+    .filter(Boolean);
+  if (tokens.length === 0) {
     return rows;
   }
-  return rows.filter((row) => {
-    const key = (row.key ?? "").toLowerCase();
-    const label = (row.label ?? "").toLowerCase();
-    const kind = (row.kind ?? "").toLowerCase();
-    const displayName = (row.displayName ?? "").toLowerCase();
-    return key.includes(q) || label.includes(q) || kind.includes(q) || displayName.includes(q);
-  });
+  return rows.filter((row) => tokens.every((token) => matchesSessionToken(row, token)));
 }
 
 function sortRows(
@@ -183,6 +237,13 @@ export function renderSessions(props: SessionsProps) {
   const filtered = filterRows(rawRows, props.searchQuery);
   const sorted = sortRows(filtered, props.sortColumn, props.sortDir);
   const totalRows = sorted.length;
+  const kindOptions = Array.from(new Set(rawRows.map((row) => row.kind).filter(Boolean)));
+  const providerOptions = Array.from(
+    new Set(
+      rawRows.map((row) => row.modelProvider).filter((value): value is string => Boolean(value)),
+    ),
+  ).slice(0, 6);
+  const exportStamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
   const totalPages = Math.max(1, Math.ceil(totalRows / props.pageSize));
   const page = Math.min(props.page, totalPages - 1);
   const paginated = paginateRows(sorted, page, props.pageSize);
@@ -292,14 +353,46 @@ export function renderSessions(props: SessionsProps) {
       }
 
       <div class="data-table-wrapper">
-        <div class="data-table-toolbar">
-          <div class="data-table-search">
-            <input
-              type="text"
-              placeholder="Filter by key, label, kind…"
-              .value=${props.searchQuery}
-              @input=${(e: Event) => props.onSearchChange((e.target as HTMLInputElement).value)}
-            />
+        <div class="data-table-toolbar data-table-toolbar--stacked">
+          <div class="data-table-toolbar__row">
+            <div class="data-table-search">
+              <input
+                type="text"
+                placeholder="Search or filter: kind:direct provider:openai has:label"
+                .value=${props.searchQuery}
+                @input=${(e: Event) => props.onSearchChange((e.target as HTMLInputElement).value)}
+              />
+            </div>
+            <div class="data-table-toolbar__actions">
+              ${
+                props.searchQuery.trim()
+                  ? html`<button class="btn" @click=${() => props.onSearchChange("")}>Clear</button>`
+                  : nothing
+              }
+              <button
+                class="btn"
+                ?disabled=${sorted.length === 0}
+                @click=${() =>
+                  downloadSessionsCsv(
+                    `openclaw-sessions-${exportStamp}.csv`,
+                    buildSessionsCsv(sorted),
+                  )}
+              >
+                Export CSV
+              </button>
+            </div>
+          </div>
+          <div class="chip-row">
+            ${kindOptions.map(
+              (kind) =>
+                html`<button class="chip" @click=${() => props.onSearchChange(`kind:${kind}`)}>${kind}</button>`,
+            )}
+            ${providerOptions.map(
+              (provider) =>
+                html`<button class="chip" @click=${() => props.onSearchChange(`provider:${provider}`)}>${provider}</button>`,
+            )}
+            <button class="chip" @click=${() => props.onSearchChange("has:label")}>has:label</button>
+            <button class="chip" @click=${() => props.onSearchChange("has:tokens")}>has:tokens</button>
           </div>
         </div>
 

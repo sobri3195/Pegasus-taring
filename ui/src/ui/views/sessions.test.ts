@@ -111,4 +111,41 @@ describe("sessions view", () => {
     const fast = selects[1] as HTMLSelectElement | undefined;
     expect(fast?.value).toBe("on");
   });
+
+  it("filters sessions with query syntax and shows export action", async () => {
+    const container = document.createElement("div");
+    render(
+      renderSessions({
+        ...buildProps({
+          ts: Date.now(),
+          path: "(multiple)",
+          count: 2,
+          defaults: { modelProvider: null, model: null, contextTokens: null },
+          sessions: [
+            {
+              key: "agent:main:one",
+              kind: "direct",
+              updatedAt: Date.now(),
+              modelProvider: "openai",
+              label: "Alpha",
+              totalTokens: 42,
+            },
+            {
+              key: "agent:main:two",
+              kind: "group",
+              updatedAt: Date.now(),
+              modelProvider: "anthropic",
+            },
+          ],
+        }),
+        searchQuery: "kind:direct provider:openai has:label",
+      }),
+      container,
+    );
+    await Promise.resolve();
+
+    expect(container.textContent).toContain("agent:main:one");
+    expect(container.textContent).not.toContain("agent:main:two");
+    expect(container.textContent).toContain("Export CSV");
+  });
 });

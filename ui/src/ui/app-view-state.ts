@@ -42,6 +42,8 @@ export type AppViewState = {
   password: string;
   loginShowGatewayToken: boolean;
   loginShowGatewayPassword: boolean;
+  googleSignInBusy: boolean;
+  googleLoginError: string | null;
   tab: Tab;
   onboarding: boolean;
   basePath: string;
@@ -308,6 +310,10 @@ export type AppViewState = {
     client: GatewayBrowserClient | null;
     refreshSessionsAfterChat: Set<string>;
     connect: () => void;
+    startGoogleLogin: () => Promise<void>;
+    signOutGoogleLogin: () => void;
+    draftNotificationEmail: (reason: string, details?: string) => void;
+    sendTestNotificationEmail: () => void;
     setTab: (tab: Tab) => void;
     setTheme: (theme: ThemeName, context?: ThemeTransitionContext) => void;
     setThemeMode: (mode: ThemeMode, context?: ThemeTransitionContext) => void;
