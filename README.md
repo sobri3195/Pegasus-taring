@@ -147,6 +147,49 @@ pnpm test:e2e
 pnpm test:extensions
 ```
 
+## Roadmap Fitur Realistis
+
+Berikut roadmap fitur yang realistis untuk dikembangkan dari fondasi codebase saat ini.
+Fokusnya adalah meningkatkan observability, operasional multi-kanal, dan pengalaman konfigurasi tanpa mengubah arsitektur inti.
+
+### Prioritas 90 hari
+
+#### Fase 1 — observability dan debugging
+
+1. **Routing simulator / debugger**
+   - Simulasikan pesan masuk berdasarkan channel, peer, account, guild, atau thread.
+   - Tampilkan agent yang terpilih, aturan yang match, fallback yang dipakai, dan session key yang terbentuk.
+   - Sangat membantu untuk deployment multi-agent dan troubleshooting binding.
+
+2. **Unified channel health dashboard**
+   - Ringkasan status semua channel dalam satu layar: connected, degraded, disconnected, auth state, dan last error.
+   - Tombol aksi cepat seperti probe ulang, buka pairing, atau buka dokumentasi channel.
+   - Cocok sebagai perluasan alami dari command status dan health probe yang sudah ada.
+
+#### Fase 2 — automasi dan memory operations
+
+3. **Cron jobs calendar + run history**
+   - Tampilan visual untuk jadwal job, next run, run history, delivery mode, dan tombol run now / pause / duplicate.
+   - Memudahkan penggunaan scheduler oleh operator non-teknis.
+
+4. **Memory inspector + pin/forget controls**
+   - Jelaskan memory apa yang ikut dipakai saat agent menjawab.
+   - Tambahkan aksi untuk pin memory penting, forget memory usang, atau exclude source tertentu.
+   - Berguna untuk audit kualitas jawaban dan pemeliharaan workspace jangka panjang.
+
+#### Fase 3 — onboarding extension
+
+5. **Extension catalog + setup wizard**
+   - Katalog extension/provider/channel yang tersedia, status instalasi, dependensi, dan quick setup.
+   - Ideal untuk menurunkan friksi onboarding saat pengguna ingin menambah channel atau provider baru.
+
+### Dampak yang diharapkan
+
+- Waktu troubleshooting konfigurasi multi-kanal menjadi lebih singkat.
+- Onboarding pengguna baru menjadi lebih mudah.
+- Operasional cron, memory, dan extension bisa dikelola oleh pengguna yang tidak selalu nyaman dengan CLI.
+- Nilai codebase meningkat tanpa perlu refactor besar pada runtime inti.
+
 ## Kapan Proyek Ini Cocok Dipakai
 
 Pegasus Taring cocok bila Anda membutuhkan:
