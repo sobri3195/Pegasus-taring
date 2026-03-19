@@ -62,6 +62,8 @@ import type { SkillMessage } from "./controllers/skills.ts";
 import type { GatewayBrowserClient, GatewayHelloOk } from "./gateway.ts";
 import type { Tab } from "./navigation.ts";
 import { loadSettings, type UiSettings } from "./storage.ts";
+import { signInWithGoogle } from "./google-auth.ts";
+import { openMailtoDraft } from "./mailto.ts";
 import { VALID_THEME_NAMES, type ResolvedTheme, type ThemeMode, type ThemeName } from "./theme.ts";
 import type {
   AgentsListResult,
@@ -125,6 +127,8 @@ export class OpenClawApp extends LitElement {
   @state() password = "";
   @state() loginShowGatewayToken = false;
   @state() loginShowGatewayPassword = false;
+  @state() googleSignInBusy = false;
+  @state() googleLoginError: string | null = null;
   @state() tab: Tab = "chat";
   @state() onboarding = resolveOnboardingMode();
   @state() connected = false;
@@ -499,6 +503,64 @@ export class OpenClawApp extends LitElement {
 
   connect() {
     connectGatewayInternal(this as unknown as Parameters<typeof connectGatewayInternal>[0]);
+  }
+
+  async startGoogleLogin() {
+    this.googleLoginError = null;
+    this.googleSignInBusy = true;
+    try {
+      const profile = await signInWithGoogle(this.settings.googleClientId);
+      this.applySettings({
+        ...this.settings,
+        googleProfileEmail: profile.email,
+        googleProfileName: profile.name,
+        googleProfileAvatar: profile.picture ?? "",
+      });
+    } catch (error) {
+      this.googleLoginError = error instanceof Error ? error.message : String(error);
+    } finally {
+      this.googleSignInBusy = false;
+    }
+  }
+
+  signOutGoogleLogin() {
+    this.googleLoginError = null;
+    this.applySettings({
+      ...this.settings,
+      googleProfileEmail: "",
+      googleProfileName: "",
+      googleProfileAvatar: "",
+    });
+  }
+
+  draftNotificationEmail(reason: string, details?: string) {
+    const recipient = this.settings.emailNotificationsRecipient.trim();
+    if (!recipient) {
+      this.lastError = "Add a notification email recipient first.";
+      return;
+    }
+    const lines = [
+      `Reason: ${reason}`,
+      `Gateway URL: ${this.settings.gatewayUrl || "(not set)"}`,
+      `Connected: ${this.connected ? "yes" : "no"}`,
+      `Session: ${this.sessionKey || this.settings.sessionKey || "main"}`,
+      `Time: ${new Date().toISOString()}`,
+    ];
+    if (details?.trim()) {
+      lines.push("", details.trim());
+    }
+    openMailtoDraft({
+      to: recipient,
+      subject: `OpenClaw dashboard alert: ${reason}`,
+      body: lines.join("\n"),
+    });
+  }
+
+  sendTestNotificationEmail() {
+    this.draftNotificationEmail(
+      "Test notification",
+      "This draft confirms that the dashboard can prepare email alerts from the browser.",
+    );
   }
 
   handleChatScroll(event: Event) {

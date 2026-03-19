@@ -32,6 +32,13 @@ export type UiSettings = {
   lastActiveSessionKey: string;
   theme: ThemeName;
   themeMode: ThemeMode;
+  googleClientId: string;
+  googleLoginRequired: boolean;
+  googleProfileEmail: string;
+  googleProfileName: string;
+  googleProfileAvatar: string;
+  emailNotificationsEnabled: boolean;
+  emailNotificationsRecipient: string;
   chatFocusMode: boolean;
   chatShowThinking: boolean;
   chatShowToolCalls: boolean;
@@ -184,6 +191,13 @@ export function loadSettings(): UiSettings {
     lastActiveSessionKey: "main",
     theme: "claw",
     themeMode: "system",
+    googleClientId: "",
+    googleLoginRequired: false,
+    googleProfileEmail: "",
+    googleProfileName: "",
+    googleProfileAvatar: "",
+    emailNotificationsEnabled: false,
+    emailNotificationsRecipient: "",
     chatFocusMode: false,
     chatShowThinking: true,
     chatShowToolCalls: true,
@@ -223,6 +237,32 @@ export function loadSettings(): UiSettings {
       lastActiveSessionKey: scopedSessionSelection.lastActiveSessionKey,
       theme,
       themeMode: mode,
+      googleClientId:
+        typeof parsed.googleClientId === "string" ? parsed.googleClientId : defaults.googleClientId,
+      googleLoginRequired:
+        typeof parsed.googleLoginRequired === "boolean"
+          ? parsed.googleLoginRequired
+          : defaults.googleLoginRequired,
+      googleProfileEmail:
+        typeof parsed.googleProfileEmail === "string"
+          ? parsed.googleProfileEmail
+          : defaults.googleProfileEmail,
+      googleProfileName:
+        typeof parsed.googleProfileName === "string"
+          ? parsed.googleProfileName
+          : defaults.googleProfileName,
+      googleProfileAvatar:
+        typeof parsed.googleProfileAvatar === "string"
+          ? parsed.googleProfileAvatar
+          : defaults.googleProfileAvatar,
+      emailNotificationsEnabled:
+        typeof parsed.emailNotificationsEnabled === "boolean"
+          ? parsed.emailNotificationsEnabled
+          : defaults.emailNotificationsEnabled,
+      emailNotificationsRecipient:
+        typeof parsed.emailNotificationsRecipient === "string"
+          ? parsed.emailNotificationsRecipient
+          : defaults.emailNotificationsRecipient,
       chatFocusMode:
         typeof parsed.chatFocusMode === "boolean" ? parsed.chatFocusMode : defaults.chatFocusMode,
       chatShowThinking:
@@ -307,6 +347,13 @@ function persistSettings(next: UiSettings) {
     gatewayUrl: next.gatewayUrl,
     theme: next.theme,
     themeMode: next.themeMode,
+    googleClientId: next.googleClientId,
+    googleLoginRequired: next.googleLoginRequired,
+    googleProfileEmail: next.googleProfileEmail,
+    googleProfileName: next.googleProfileName,
+    googleProfileAvatar: next.googleProfileAvatar,
+    emailNotificationsEnabled: next.emailNotificationsEnabled,
+    emailNotificationsRecipient: next.emailNotificationsRecipient,
     chatFocusMode: next.chatFocusMode,
     chatShowThinking: next.chatShowThinking,
     chatShowToolCalls: next.chatShowToolCalls,
