@@ -1,130 +1,222 @@
-# Pegasus Taring
+# Pegasus Taring 🚀
 
-Pegasus Taring adalah platform gateway, automasi, dan orkestrasi multi-kanal berbasis TypeScript. Proyek ini menyatukan CLI, layanan gateway, antarmuka web, aplikasi desktop/mobile, sistem plugin, serta modul agen untuk membangun alur kerja pesan, AI, media, dan integrasi lintas kanal dalam satu codebase.
+<p align="center">
+  <img src="README-header.png" alt="Pegasus Taring Header" width="100%" />
+</p>
 
-## Author dan Kontak
+<p align="center">
+  <img alt="Version" src="https://img.shields.io/badge/version-2026.3.14-blue" />
+  <img alt="Node" src="https://img.shields.io/badge/node-%3E%3D22-339933?logo=node.js&logoColor=white" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-green" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-ESM-3178C6?logo=typescript&logoColor=white" />
+</p>
 
-- **Author:** Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE
-- **GitHub:** https://github.com/sobri3195
-- **Email:** muhammadsobrimaulana31@gmail.com
-- **Website:** https://muhammadsobrimaulana.netlify.app
+Pegasus Taring adalah platform **gateway + automasi + orkestrasi multi-kanal** berbasis TypeScript.
+Dalam satu codebase, proyek ini menyatukan:
 
-## Social Media dan Komunitas
+- 🧠 runtime agent dan tool,
+- 💬 integrasi channel messaging,
+- 🌐 antarmuka CLI / Web UI / TUI,
+- 📱 aplikasi desktop & mobile,
+- 🧩 extension/plugin system,
+- 🧪 pipeline testing lintas environment.
 
-- **YouTube:** https://www.youtube.com/@muhammadsobrimaulana6013
-- **Telegram:** https://t.me/winlin_exploit
-- **TikTok:** https://www.tiktok.com/@dr.sobri
-- **WhatsApp Group:** https://chat.whatsapp.com/B8nwRZOBMo64GjTwdXV8Bl
+---
 
-## Dukungan dan Donasi
+## 📚 Daftar Isi
 
-- **Lynk.id:** https://lynk.id/muhsobrimaulana
-- **Trakteer:** https://trakteer.id/g9mkave5gauns962u07t
-- **Gumroad:** https://maulanasobri.gumroad.com/
-- **KaryaKarsa:** https://karyakarsa.com/muhammadsobrimaulana
-- **Nyawer:** https://nyawer.co/MuhammadSobriMaulana
+- [Gambaran Umum](#-gambaran-umum)
+- [Kenapa Pegasus Taring?](#-kenapa-pegasus-taring)
+- [Fitur Utama](#-fitur-utama)
+- [Arsitektur Tingkat Tinggi](#-arsitektur-tingkat-tinggi)
+- [Struktur Direktori](#-struktur-direktori)
+- [Quick Start](#-quick-start)
+- [Perintah Harian yang Paling Sering Dipakai](#-perintah-harian-yang-paling-sering-dipakai)
+- [Build, Quality Check, dan Testing](#-build-quality-check-dan-testing)
+- [Ekosistem Extension](#-ekosistem-extension)
+- [Use Case Implementasi](#-use-case-implementasi)
+- [Roadmap Fitur (Realistis)](#-roadmap-fitur-realistis)
+- [Kontribusi](#-kontribusi)
+- [Author, Kontak, dan Komunitas](#-author-kontak-dan-komunitas)
+- [Dukungan](#-dukungan)
+- [Lisensi](#-lisensi)
 
-## Tautan Tambahan
+---
 
-- **Sevalla Page:** https://muhammad-sobri-maulana-kvr6a.sevalla.page/
-- **Toko Online Sobri:** https://pegasus-shop.netlify.app
+## 🔭 Gambaran Umum
 
-## Fitur Utama
+Pegasus Taring dirancang untuk tim/individu yang butuh satu "control plane" untuk:
 
-- Gateway multi-kanal untuk menghubungkan alur komunikasi, pairing perangkat, routing, dan status layanan.
-- CLI lengkap untuk onboarding, konfigurasi, pengelolaan kanal, pengujian, dan automasi operasional.
-- Sistem agen dan tool runtime untuk tugas lokal, sandbox, RPC, dan skill berbasis sesi.
-- Dukungan plugin dan extension agar provider, kanal, memori, voice, serta integrasi tambahan bisa dipasang secara modular.
-- Pipeline media untuk pemrosesan file, pemahaman media, image generation, text-to-speech, dan web search.
-- UI dan aplikasi lintas platform melalui web UI, TUI, macOS, iOS, dan Android.
-- Infrastruktur pengujian luas mencakup unit test, gateway test, extension test, end-to-end test, dan smoke test lintas environment.
+1. menerima event/pesan dari berbagai kanal,
+2. memproses dengan rules/agent/tool,
+3. merespons secara konsisten,
+4. memantau status operasional,
+5. mengembangkan integrasi baru secara modular.
 
-## Modul Inti
+> Cocok untuk otomasi support, notifikasi operasional, asisten internal, bot multi-platform, dan orkestrasi AI workflow.
 
-### Runtime inti
+---
 
-- `src/cli` dan `src/commands` untuk entrypoint CLI, perintah operasional, dan workflow onboarding.
-- `src/gateway`, `src/daemon`, dan `src/process` untuk server gateway, proses layanan, dan supervisi runtime.
-- `src/config`, `src/secrets`, dan `src/security` untuk konfigurasi, pengelolaan rahasia, serta boundary keamanan.
-- `src/routing`, `src/channels`, dan `src/pairing` untuk orkestrasi kanal, allowlist, transport, dan pairing perangkat.
+## ✨ Kenapa Pegasus Taring?
 
-### Agen dan automasi
+- **Satu runtime, banyak channel** → tidak perlu buat stack terpisah per platform.
+- **Modular lewat extension** → fitur baru bisa ditambah tanpa membebani inti.
+- **CLI-first, UI-ready** → enak untuk operator terminal maupun pengguna GUI.
+- **Agent-ready** → siap untuk workflow tool, memory, sandbox, dan sesi.
+- **Testing serius** → unit, e2e, gateway, extension, docker, sampai smoke lintas OS.
 
-- `src/agents` untuk runner agen, auth profile, sandbox, schema, tool, dan skill runtime.
-- `src/cron` untuk job terjadwal dan workflow automasi terisolasi.
-- `src/hooks` untuk hook bawaan dan ekstensi event-driven.
-- `src/sessions` dan `src/context-engine` untuk state sesi dan konteks percakapan/runtime.
+---
 
-### AI, media, dan pemrosesan konten
+## 🧩 Fitur Utama
 
-- `src/providers` dan `extensions/*` untuk provider model, gateway AI, serta integrasi pihak ketiga.
-- `src/media`, `src/media-understanding`, `src/image-generation`, dan `src/tts` untuk pipeline media multimodal.
-- `src/web-search`, `src/link-understanding`, dan `src/markdown` untuk pengayaan konten, pencarian web, dan normalisasi teks.
-- `src/memory` untuk abstraksi memori dan penyimpanan konteks percakapan.
+### 1) 💬 Gateway Multi-Kanal
 
-### Antarmuka pengguna
+- Routing dan orkestrasi komunikasi lintas channel.
+- Pairing/onboarding channel.
+- Health/status probing untuk memastikan kanal aktif.
 
-- `src/browser`, `ui/`, dan `src/canvas-host` untuk browser runtime, UI web, dan host A2UI.
-- `src/tui` dan `src/terminal` untuk antarmuka terminal interaktif.
-- `apps/macos`, `apps/ios`, dan `apps/android` untuk aplikasi native lintas platform.
+### 2) 🛠️ CLI Lengkap
 
-## Extension dan Integrasi
+- Command untuk setup awal, konfigurasi, status, testing, dan operasi harian.
+- Mendukung workflow developer (dev mode, watch mode, build pipeline).
 
-Direktori `extensions/` berisi modul integrasi yang dapat dipasang terpisah. Cakupannya meliputi:
+### 3) 🤖 Agent Runtime
 
-- Kanal komunikasi seperti Discord, Telegram, Slack, Signal, WhatsApp, LINE, Matrix, IRC, Zalo, dan lainnya.
-- Provider model dan gateway seperti Anthropic, OpenAI, Google, Mistral, Ollama, Vercel AI Gateway, Cloudflare AI Gateway, dan lainnya.
-- Modul memori, voice, telephony, observability, sandbox, dan utilitas tambahan.
+- Sistem agent berbasis sesi.
+- Dukungan tool runtime, sandbox, dan skill workflow.
+- Integrasi memory + context untuk respons yang konsisten.
 
-Struktur ini memudahkan pengembangan fitur baru tanpa membebani runtime inti.
+### 4) 📦 Plugin & Extension System
 
-## Struktur Direktori Singkat
+- Provider/model/channel/integrasi tambahan dapat dipasang modular.
+- Isolasi dependency pada level extension.
+- Memudahkan scaling tanpa refactor inti besar.
 
-```text
-src/            Source code utama
-extensions/     Extension dan plugin modular
-apps/           Aplikasi macOS, iOS, dan Android
-ui/             Web UI
-docs/           Dokumentasi
-scripts/        Script build, release, test, dan maintenance
-dist/           Hasil build
+### 5) 🎨 Multi Interface
+
+- CLI untuk operasi cepat.
+- TUI untuk interaksi terminal yang lebih kaya.
+- Web UI + aplikasi native (macOS, iOS, Android).
+
+### 6) 🎞️ AI + Media Pipeline
+
+- Dukungan pemrosesan media dan multimodal.
+- Komponen web search, link/content understanding, markdown normalization.
+- Fondasi untuk text/image/speech workflows.
+
+### 7) ✅ Quality & Reliability
+
+- Linting/formatting/checks terintegrasi.
+- Coverage/testing pipeline luas.
+- Skenario test lintas mode: lokal, docker, hingga paralel environment.
+
+---
+
+## 🏗️ Arsitektur Tingkat Tinggi
+
+```mermaid
+flowchart LR
+    A[Channels & Apps\nTelegram/Discord/Slack/...]
+    B[Gateway Layer\nRouting/Pairing/Status]
+    C[Core Runtime\nCLI/Commands/Config/Security]
+    D[Agent Layer\nTools/Sandbox/Skills/Session]
+    E[AI + Media Layer\nProviders/Memory/Web Search/TTS]
+    F[Extensions\nChannel/Provider/Utility Plugins]
+    G[Interfaces\nCLI/TUI/Web/macOS/iOS/Android]
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    F --> C
+    C --> G
 ```
 
-## Menjalankan Proyek
+---
 
-### Prasyarat
+## 🗂️ Struktur Direktori
 
-- Node.js 22+
-- pnpm
+```text
+src/            Source code utama (CLI, commands, gateway, routing, runtime)
+extensions/     Plugin/extension modular (channel, provider, utility)
+apps/           Aplikasi native (macOS, iOS, Android)
+ui/             Web UI
+docs/           Dokumentasi teknis dan penggunaan
+scripts/        Build/test/release/maintenance scripts
+dist/           Output build
+```
+
+Area inti yang penting:
+
+- `src/cli`, `src/commands` → command line workflow.
+- `src/gateway`, `src/daemon`, `src/process` → service runtime dan process lifecycle.
+- `src/channels`, `src/routing`, `src/pairing` → orkestrasi multi-kanal.
+- `src/agents`, `src/sessions`, `src/context-engine` → eksekusi agent berbasis sesi.
+- `src/providers`, `src/media`, `src/tts`, `src/web-search` → AI/media/content processing.
+- `src/terminal`, `src/tui`, `ui/`, `apps/*` → surface pengguna.
+
+---
+
+## ⚡ Quick Start
+
+### 1) Prasyarat
+
+- Node.js **22+**
+- `pnpm`
 - Bun (direkomendasikan untuk sebagian workflow TypeScript)
 
-### Instalasi dependensi
+### 2) Install dependency
 
 ```bash
 pnpm install
 ```
 
-### Menjalankan CLI pengembangan
+### 3) Coba CLI
 
 ```bash
 pnpm pegasus-taring --help
+```
+
+### 4) Jalankan mode development
+
+```bash
 pnpm dev
 ```
 
-### Menjalankan UI
+### 5) Jalankan Web UI (opsional)
 
 ```bash
 pnpm ui:install
 pnpm ui:dev
 ```
 
-### Menjalankan TUI
+### 6) Jalankan TUI (opsional)
 
 ```bash
 pnpm tui
 ```
 
-## Build dan Pengujian
+---
+
+## 🧭 Perintah Harian yang Paling Sering Dipakai
+
+| Kebutuhan | Command |
+|---|---|
+| Lihat bantuan CLI | `pnpm pegasus-taring --help` |
+| Jalankan mode dev | `pnpm dev` |
+| Build project | `pnpm build` |
+| Cek kualitas (lint + guard) | `pnpm check` |
+| Cek format | `pnpm format:check` |
+| Perbaiki format otomatis | `pnpm format:fix` |
+| Jalankan semua test utama | `pnpm test` |
+| Jalankan e2e test | `pnpm test:e2e` |
+| Jalankan extension test | `pnpm test:extensions` |
+| Jalankan Web UI dev | `pnpm ui:dev` |
+| Jalankan TUI | `pnpm tui` |
+
+---
+
+## 🧪 Build, Quality Check, dan Testing
 
 ### Build
 
@@ -132,75 +224,179 @@ pnpm tui
 pnpm build
 ```
 
-### Pemeriksaan kualitas kode
+### Quality check
 
 ```bash
 pnpm check
 pnpm format:check
 ```
 
-### Menjalankan test
+### Testing utama
 
 ```bash
 pnpm test
 pnpm test:e2e
 pnpm test:extensions
+pnpm test:coverage
 ```
 
-## Roadmap Fitur Realistis
+### Testing khusus (contoh)
 
-Berikut roadmap fitur yang realistis untuk dikembangkan dari fondasi codebase saat ini.
-Fokusnya adalah meningkatkan observability, operasional multi-kanal, dan pengalaman konfigurasi tanpa mengubah arsitektur inti.
+- Gateway tests: `pnpm test:gateway`
+- Channel tests: `pnpm test:channels`
+- Docker-based tests: `pnpm test:docker:all`
+- Install smoke tests: `pnpm test:install:smoke`
+- Parallels smoke (macOS/Windows/Linux):
+  - `pnpm test:parallels:macos`
+  - `pnpm test:parallels:windows`
+  - `pnpm test:parallels:linux`
+
+---
+
+## 🧩 Ekosistem Extension
+
+`extensions/` memungkinkan Anda menambah kemampuan baru tanpa mengubah core secara agresif.
+
+Contoh kategori extension:
+
+- **Channel adapters:** Discord, Telegram, Slack, Signal, WhatsApp, LINE, Matrix, IRC, Zalo, dsb.
+- **Model/provider adapters:** OpenAI, Anthropic, Google, Mistral, Ollama, Vercel AI Gateway, Cloudflare AI Gateway, dsb.
+- **Utility extensions:** memory backend, voice, observability, sandbox, integrasi domain khusus.
+
+Keuntungan pendekatan ini:
+
+- upgrade core lebih aman,
+- dependency lebih terisolasi,
+- eksperimen fitur baru lebih cepat.
+
+---
+
+## 🖼️ Tampilan
+
+### Header proyek
+
+![Pegasus Taring Header](README-header.png)
+
+### Contoh UI mobile
+
+![Pegasus Taring Mobile UI](docs/images/mobile-ui-screenshot.png)
+
+---
+
+## 🧠 Use Case Implementasi
+
+### 1) Command Center Multi-Channel
+
+Mengelola pesan masuk dari banyak channel dalam satu gateway untuk monitoring + respon otomatis.
+
+### 2) AI Assistant Operasional Tim
+
+Menggabungkan channel + agent + tool untuk tugas harian: FAQ, ringkasan, routing tiket, notifikasi insiden.
+
+### 3) Otomasi Konten dan Media
+
+Workflow terjadwal untuk memproses teks/media, lalu distribusikan hasil ke channel tertentu.
+
+### 4) Platform Integrasi Modular
+
+Sebagai fondasi produk internal yang terus bertumbuh, dengan extension sebagai unit evolusi fitur.
+
+---
+
+## 🗺️ Roadmap Fitur (Realistis)
 
 ### Prioritas 90 hari
 
-#### Fase 1 — observability dan debugging
+#### Fase 1 — observability & debugging
 
-1. **Routing simulator / debugger**
-   - Simulasikan pesan masuk berdasarkan channel, peer, account, guild, atau thread.
-   - Tampilkan agent yang terpilih, aturan yang match, fallback yang dipakai, dan session key yang terbentuk.
-   - Sangat membantu untuk deployment multi-agent dan troubleshooting binding.
+1. **Routing Simulator / Debugger**
+   - Simulasi pesan berdasar channel/guild/thread.
+   - Menampilkan rule match, agent terpilih, fallback, dan session key.
 
-2. **Unified channel health dashboard**
-   - Ringkasan status semua channel dalam satu layar: connected, degraded, disconnected, auth state, dan last error.
-   - Tombol aksi cepat seperti probe ulang, buka pairing, atau buka dokumentasi channel.
-   - Cocok sebagai perluasan alami dari command status dan health probe yang sudah ada.
+2. **Unified Channel Health Dashboard**
+   - Ringkasan status semua channel (connected/degraded/disconnected).
+   - Aksi cepat: re-probe, pairing, buka dokumentasi.
 
-#### Fase 2 — automasi dan memory operations
+#### Fase 2 — automasi & memory operations
 
-3. **Cron jobs calendar + run history**
-   - Tampilan visual untuk jadwal job, next run, run history, delivery mode, dan tombol run now / pause / duplicate.
-   - Memudahkan penggunaan scheduler oleh operator non-teknis.
+3. **Cron Jobs Calendar + Run History**
+   - Kalender job, next run, history, run now/pause/duplicate.
 
-4. **Memory inspector + pin/forget controls**
-   - Jelaskan memory apa yang ikut dipakai saat agent menjawab.
-   - Tambahkan aksi untuk pin memory penting, forget memory usang, atau exclude source tertentu.
-   - Berguna untuk audit kualitas jawaban dan pemeliharaan workspace jangka panjang.
+4. **Memory Inspector + Pin/Forget**
+   - Transparansi memory yang dipakai agent.
+   - Kontrol pin/forget/exclude source untuk menjaga kualitas context.
 
 #### Fase 3 — onboarding extension
 
-5. **Extension catalog + setup wizard**
-   - Katalog extension/provider/channel yang tersedia, status instalasi, dependensi, dan quick setup.
-   - Ideal untuk menurunkan friksi onboarding saat pengguna ingin menambah channel atau provider baru.
+5. **Extension Catalog + Setup Wizard**
+   - Katalog extension/provider/channel lengkap dengan status instalasi.
+   - Setup cepat agar onboarding pengguna baru lebih mulus.
 
-### Dampak yang diharapkan
+### Dampak yang ditargetkan
 
-- Waktu troubleshooting konfigurasi multi-kanal menjadi lebih singkat.
-- Onboarding pengguna baru menjadi lebih mudah.
-- Operasional cron, memory, dan extension bisa dikelola oleh pengguna yang tidak selalu nyaman dengan CLI.
-- Nilai codebase meningkat tanpa perlu refactor besar pada runtime inti.
+- ⏱️ Troubleshooting lebih cepat.
+- 🧑‍💻 Onboarding operator baru lebih sederhana.
+- 📈 Operasional lebih stabil dan terukur.
+- 🧱 Evolusi fitur tanpa refactor besar-besaran.
 
-## Kapan Proyek Ini Cocok Dipakai
+---
 
-Pegasus Taring cocok bila Anda membutuhkan:
+## 🤝 Kontribusi
 
-- Orkestrasi multi-kanal dalam satu runtime.
-- Platform eksperimen untuk agen, tool, skill, dan workflow berbasis sesi.
-- Sistem yang bisa diperluas melalui extension tanpa mengubah seluruh inti aplikasi.
-- Fondasi untuk build desktop, mobile, web UI, dan terminal dari satu repository.
+Kontribusi sangat terbuka, terutama untuk:
 
-## Catatan Pengembangan
+- penambahan extension/channel/provider,
+- peningkatan observability,
+- penyederhanaan onboarding,
+- peningkatan coverage test dan reliability.
 
-- Codebase ini besar dan modular, sehingga perubahan sebaiknya mengikuti batas tanggung jawab tiap direktori.
-- Untuk pengembangan fitur baru, prioritaskan penempatan logika pada modul yang paling dekat dengan domainnya.
-- Untuk integrasi baru, gunakan pola extension agar dependensi tetap terisolasi.
+Langkah singkat:
+
+1. Fork repo.
+2. Buat branch fitur/perbaikan.
+3. Lakukan perubahan + test terkait.
+4. Kirim pull request dengan penjelasan jelas.
+
+---
+
+## 👤 Author, Kontak, dan Komunitas
+
+### Author
+
+- **Lettu Kes dr. Muhammad Sobri Maulana, S.Kom, CEH, OSCP, OSCE**
+
+### Kontak
+
+- 🌐 Website: https://muhammadsobrimaulana.netlify.app
+- ✉️ Email: muhammadsobrimaulana31@gmail.com
+- 🐙 GitHub: https://github.com/sobri3195
+
+### Komunitas & Sosial
+
+- ▶️ YouTube: https://www.youtube.com/@muhammadsobrimaulana6013
+- 💬 Telegram: https://t.me/winlin_exploit
+- 🎵 TikTok: https://www.tiktok.com/@dr.sobri
+- 👥 WhatsApp Group: https://chat.whatsapp.com/B8nwRZOBMo64GjTwdXV8Bl
+
+### Tautan tambahan
+
+- 📄 Sevalla Page: https://muhammad-sobri-maulana-kvr6a.sevalla.page/
+- 🛒 Toko Online Sobri: https://pegasus-shop.netlify.app
+
+---
+
+## ❤️ Dukungan
+
+Jika proyek ini membantu, Anda bisa mendukung melalui:
+
+- Lynk.id: https://lynk.id/muhsobrimaulana
+- Trakteer: https://trakteer.id/g9mkave5gauns962u07t
+- Gumroad: https://maulanasobri.gumroad.com/
+- KaryaKarsa: https://karyakarsa.com/muhammadsobrimaulana
+- Nyawer: https://nyawer.co/MuhammadSobriMaulana
+
+---
+
+## 📄 Lisensi
+
+MIT License.
