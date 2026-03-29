@@ -19,6 +19,16 @@ describe("extractLinksFromMessage", () => {
     expect(links).toEqual(["https://bare.example"]);
   });
 
+  it("trims trailing sentence punctuation from bare links", () => {
+    const links = extractLinksFromMessage("Baca ini https://example.com/docs, lalu https://example.com/help.");
+    expect(links).toEqual(["https://example.com/docs", "https://example.com/help"]);
+  });
+
+  it("removes unmatched trailing parenthesis from bare links", () => {
+    const links = extractLinksFromMessage("Referensi (https://example.com/guide) dan (https://example.com/api(v2)).");
+    expect(links).toEqual(["https://example.com/guide", "https://example.com/api(v2)"]);
+  });
+
   it("blocks 127.0.0.1", () => {
     const links = extractLinksFromMessage("http://127.0.0.1/test https://ok.test");
     expect(links).toEqual(["https://ok.test"]);
