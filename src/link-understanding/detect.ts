@@ -4,6 +4,7 @@ import { DEFAULT_MAX_LINKS } from "./defaults.js";
 // Remove markdown link syntax so only bare URLs are considered.
 const MARKDOWN_LINK_RE = /\[[^\]]*]\((https?:\/\/\S+?)\)/gi;
 const BARE_LINK_RE = /https?:\/\/\S+/gi;
+const TRAILING_PUNCTUATION_RE = /[.,!?;:]+$/;
 
 function stripMarkdownLinks(message: string): string {
   return message.replace(MARKDOWN_LINK_RE, " ");
@@ -14,6 +15,21 @@ function resolveMaxLinks(value?: number): number {
     return Math.floor(value);
   }
   return DEFAULT_MAX_LINKS;
+}
+
+function normalizeBareUrl(raw: string): string {
+  let candidate = raw.replace(TRAILING_PUNCTUATION_RE, "");
+
+  while (candidate.endsWith(")")) {
+    const opens = [...candidate].filter((char) => char === "(").length;
+    const closes = [...candidate].filter((char) => char === ")").length;
+    if (closes <= opens) {
+      break;
+    }
+    candidate = candidate.slice(0, -1);
+  }
+
+  return candidate;
 }
 
 function isAllowedUrl(raw: string): boolean {
@@ -47,14 +63,18 @@ export function extractLinksFromMessage(message: string, opts?: { maxLinks?: num
     if (!raw) {
       continue;
     }
-    if (!isAllowedUrl(raw)) {
+    const normalized = normalizeBareUrl(raw);
+    if (!normalized) {
       continue;
     }
-    if (seen.has(raw)) {
+    if (!isAllowedUrl(normalized)) {
       continue;
     }
-    seen.add(raw);
-    results.push(raw);
+    if (seen.has(normalized)) {
+      continue;
+    }
+    seen.add(normalized);
+    results.push(normalized);
     if (results.length >= maxLinks) {
       break;
     }
