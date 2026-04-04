@@ -24,6 +24,9 @@ export type NormalizedPollInput = {
 
 type NormalizePollOptions = {
   maxOptions?: number;
+  dedupeOptions?: boolean;
+  autoClampMaxSelections?: boolean;
+  autoClampDuration?: boolean;
 };
 
 export function resolvePollMaxSelections(
@@ -37,45 +40,67 @@ export function normalizePollInput(
   input: PollInput,
   options: NormalizePollOptions = {},
 ): NormalizedPollInput {
+  const dedupeOptions = options.dedupeOptions ?? true;
+  const autoClampMaxSelections = options.autoClampMaxSelections ?? true;
+  const autoClampDuration = options.autoClampDuration ?? true;
   const question = input.question.trim();
   if (!question) {
     throw new Error("Poll question is required");
   }
   const pollOptions = (input.options ?? []).map((option) => option.trim());
   const cleaned = pollOptions.filter(Boolean);
-  if (cleaned.length < 2) {
+  const normalizedOptions = dedupeOptions
+    ? cleaned.filter((option, index, allOptions) => {
+        const normalized = option.toLocaleLowerCase();
+        return (
+          index === allOptions.findIndex((candidate) => candidate.toLocaleLowerCase() === normalized)
+        );
+      })
+    : cleaned;
+  if (normalizedOptions.length < 2) {
     throw new Error("Poll requires at least 2 options");
   }
-  if (options.maxOptions !== undefined && cleaned.length > options.maxOptions) {
+  if (options.maxOptions !== undefined && normalizedOptions.length > options.maxOptions) {
     throw new Error(`Poll supports at most ${options.maxOptions} options`);
   }
   const maxSelectionsRaw = input.maxSelections;
-  const maxSelections =
+  const maxSelectionsBase =
     typeof maxSelectionsRaw === "number" && Number.isFinite(maxSelectionsRaw)
       ? Math.floor(maxSelectionsRaw)
       : 1;
-  if (maxSelections < 1) {
+  const maxSelections = autoClampMaxSelections
+    ? Math.min(Math.max(maxSelectionsBase, 1), normalizedOptions.length)
+    : maxSelectionsBase;
+  if (!autoClampMaxSelections && maxSelections < 1) {
     throw new Error("maxSelections must be at least 1");
   }
-  if (maxSelections > cleaned.length) {
+  if (!autoClampMaxSelections && maxSelections > normalizedOptions.length) {
     throw new Error("maxSelections cannot exceed option count");
   }
 
   const durationSecondsRaw = input.durationSeconds;
-  const durationSeconds =
+  const durationSecondsBase =
     typeof durationSecondsRaw === "number" && Number.isFinite(durationSecondsRaw)
       ? Math.floor(durationSecondsRaw)
       : undefined;
-  if (durationSeconds !== undefined && durationSeconds < 1) {
+  const durationSeconds =
+    autoClampDuration && durationSecondsBase !== undefined
+      ? Math.max(1, durationSecondsBase)
+      : durationSecondsBase;
+  if (!autoClampDuration && durationSeconds !== undefined && durationSeconds < 1) {
     throw new Error("durationSeconds must be at least 1");
   }
 
   const durationRaw = input.durationHours;
-  const durationHours =
+  const durationHoursBase =
     typeof durationRaw === "number" && Number.isFinite(durationRaw)
       ? Math.floor(durationRaw)
       : undefined;
-  if (durationHours !== undefined && durationHours < 1) {
+  const durationHours =
+    autoClampDuration && durationHoursBase !== undefined
+      ? Math.max(1, durationHoursBase)
+      : durationHoursBase;
+  if (!autoClampDuration && durationHours !== undefined && durationHours < 1) {
     throw new Error("durationHours must be at least 1");
   }
   if (durationSeconds !== undefined && durationHours !== undefined) {
@@ -83,7 +108,7 @@ export function normalizePollInput(
   }
   return {
     question,
-    options: cleaned,
+    options: normalizedOptions,
     maxSelections,
     durationSeconds,
     durationHours,
