@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 const MIN_NODE_MAJOR = 22;
 const MIN_NODE_MINOR = 12;
 const MIN_NODE_VERSION = `${MIN_NODE_MAJOR}.${MIN_NODE_MINOR}`;
+const WRAPPER_DEBUG_ENABLED =
+  process.env.OPENCLAW_WRAPPER_DEBUG === "1" || process.argv.includes("--wrapper-debug");
 
 const parseNodeVersion = (rawVersion) => {
   const [majorRaw = "0", minorRaw = "0"] = rawVersion.split(".");
@@ -33,6 +35,10 @@ const resolveCliDisplayName = () => {
 const CLI_DISPLAY_NAME = resolveCliDisplayName();
 
 const ensureSupportedNodeVersion = () => {
+  if (process.env.OPENCLAW_SKIP_NODE_VERSION_CHECK === "1") {
+    return;
+  }
+
   if (isSupportedNodeVersion(parseNodeVersion(process.versions.node))) {
     return;
   }
@@ -45,6 +51,23 @@ const ensureSupportedNodeVersion = () => {
       `  nvm alias default ${MIN_NODE_MAJOR}\n`,
   );
   process.exit(1);
+};
+
+const debugLog = (message) => {
+  if (!WRAPPER_DEBUG_ENABLED) {
+    return;
+  }
+
+  process.stderr.write(`${CLI_DISPLAY_NAME}: ${message}\n`);
+};
+
+const resolveEntryCandidates = () => {
+  const envEntry = process.env.OPENCLAW_ENTRY_MODULE;
+  if (typeof envEntry === "string" && envEntry.trim().length > 0) {
+    return [envEntry.trim()];
+  }
+
+  return ["./dist/entry.js", "./dist/entry.mjs", "./dist/entry.cjs"];
 };
 
 ensureSupportedNodeVersion();
@@ -72,7 +95,13 @@ const isDirectModuleNotFoundError = (err, specifier) => {
   }
 
   const message = "message" in err && typeof err.message === "string" ? err.message : "";
-  return message.includes(fileURLToPath(expectedUrl));
+  const expectedPath = fileURLToPath(expectedUrl);
+
+  // Keep transitive missing dependencies visible (e.g., missing package imported by entry.js).
+  return (
+    message.includes(`Cannot find module '${expectedPath}'`) ||
+    message.includes(`Cannot find module "${expectedPath}"`)
+  );
 };
 
 const installProcessWarningFilter = async () => {
@@ -98,20 +127,33 @@ await installProcessWarningFilter();
 const tryImport = async (specifier) => {
   try {
     await import(specifier);
+    debugLog(`loaded ${specifier}`);
     return true;
   } catch (err) {
     // Only swallow direct entry misses; rethrow transitive resolution failures.
     if (isDirectModuleNotFoundError(err, specifier)) {
+      debugLog(`missing ${specifier}`);
       return false;
     }
     throw err;
   }
 };
 
-if (await tryImport("./dist/entry.js")) {
-  // OK
-} else if (await tryImport("./dist/entry.mjs")) {
-  // OK
+const entryCandidates = resolveEntryCandidates();
+let loadedEntry = false;
+for (const entrySpecifier of entryCandidates) {
+  if (await tryImport(entrySpecifier)) {
+    loadedEntry = true;
+    break;
+  }
+}
+
+if (loadedEntry) {
+  // Entrypoint imported successfully.
 } else {
-  throw new Error(`${CLI_DISPLAY_NAME}: missing dist/entry.(m)js (build output).`);
+  const entrySummary =
+    entryCandidates.length === 1
+      ? entryCandidates[0]
+      : `${entryCandidates[0]} | ${entryCandidates[1]} | ${entryCandidates[2]}`;
+  throw new Error(`${CLI_DISPLAY_NAME}: missing ${entrySummary} (build output).`);
 }
