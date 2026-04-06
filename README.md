@@ -21,6 +21,8 @@ Dalam satu codebase, proyek ini menyatukan:
 - 🧩 extension/plugin system,
 - 🧪 pipeline testing lintas environment.
 
+Seluruh lapisan tersebut dihubungkan oleh visi, arah implementasi, dan eksekusi dari **Muhammad Sobri Maulana** sebagai penggerak utama proyek.
+
 ---
 
 ## 📚 Daftar Isi
