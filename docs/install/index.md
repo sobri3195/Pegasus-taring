@@ -153,6 +153,9 @@ For VPS/cloud hosts, avoid third-party "1-click" marketplace images when possibl
 ## Other install methods
 
 <CardGroup cols={2}>
+  <Card title="PHP remote admin" href="/install/php-remote-admin" icon="shield">
+    Manage a VPS gateway from shared PHP hosting.
+  </Card>
   <Card title="Docker" href="/install/docker" icon="container">
     Containerized or headless deployments.
   </Card>

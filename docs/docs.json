@@ -881,14 +881,15 @@
                 "pages": [
                   "vps",
                   "install/kubernetes",
-                  "install/fly",
-                  "install/hetzner",
-                  "install/gcp",
-                  "install/macos-vm",
                   "install/exe-dev",
+                  "install/fly",
+                  "install/gcp",
+                  "install/hetzner",
+                  "install/macos-vm",
+                  "install/northflank",
+                  "install/php-remote-admin",
                   "install/railway",
-                  "install/render",
-                  "install/northflank"
+                  "install/render"
                 ]
               },
               {
