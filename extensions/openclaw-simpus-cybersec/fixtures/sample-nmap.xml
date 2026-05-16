@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<nmaprun>
+  <host>
+    <address addr="192.168.1.50" addrtype="ipv4"/>
+    <ports>
+      <port protocol="tcp" portid="22"><state state="open"/><service name="ssh" product="OpenSSH" version="9.6" extrainfo="Ubuntu"/></port>
+      <port protocol="tcp" portid="3306"><state state="open"/><service name="mysql" product="MySQL" version="8.0"/></port>
+      <port protocol="tcp" portid="8080"><state state="closed"/><service name="http"/></port>
+    </ports>
+  </host>
+</nmaprun>

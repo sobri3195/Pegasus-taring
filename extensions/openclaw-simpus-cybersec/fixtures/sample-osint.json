@@ -1,0 +1,6 @@
+{
+  "domain": "simpus.example.test",
+  "resolvedIps": ["192.168.1.50"],
+  "missingSecurityHeaders": ["Content-Security-Policy"],
+  "suspiciousExposedPaths": [{ "path": "/swagger", "status": 200, "riskHint": "Medium" }]
+}

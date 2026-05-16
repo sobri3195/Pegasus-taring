@@ -202,19 +202,19 @@ pnpm tui
 
 ## 🧭 Perintah Harian yang Paling Sering Dipakai
 
-| Kebutuhan | Command |
-|---|---|
-| Lihat bantuan CLI | `pnpm pegasus-taring --help` |
-| Jalankan mode dev | `pnpm dev` |
-| Build project | `pnpm build` |
-| Cek kualitas (lint + guard) | `pnpm check` |
-| Cek format | `pnpm format:check` |
-| Perbaiki format otomatis | `pnpm format:fix` |
-| Jalankan semua test utama | `pnpm test` |
-| Jalankan e2e test | `pnpm test:e2e` |
-| Jalankan extension test | `pnpm test:extensions` |
-| Jalankan Web UI dev | `pnpm ui:dev` |
-| Jalankan TUI | `pnpm tui` |
+| Kebutuhan                   | Command                      |
+| --------------------------- | ---------------------------- |
+| Lihat bantuan CLI           | `pnpm pegasus-taring --help` |
+| Jalankan mode dev           | `pnpm dev`                   |
+| Build project               | `pnpm build`                 |
+| Cek kualitas (lint + guard) | `pnpm check`                 |
+| Cek format                  | `pnpm format:check`          |
+| Perbaiki format otomatis    | `pnpm format:fix`            |
+| Jalankan semua test utama   | `pnpm test`                  |
+| Jalankan e2e test           | `pnpm test:e2e`              |
+| Jalankan extension test     | `pnpm test:extensions`       |
+| Jalankan Web UI dev         | `pnpm ui:dev`                |
+| Jalankan TUI                | `pnpm tui`                   |
 
 ---
 
@@ -402,3 +402,9 @@ Jika proyek ini membantu, Anda bisa mendukung melalui:
 ## 📄 Lisensi
 
 MIT License.
+
+## Extensions
+
+### OpenClaw SIMPUS Scanner & OSINT Assistant
+
+Pegasus Taring includes a defensive SIMPUS/SIMRS security assessment extension at `extensions/openclaw-simpus-cybersec`. It provides authorized-only light scanning, passive OSINT, SIMPUS-specific risk scoring, scan comparison, local JSON storage, audit logs, Markdown/JSON/CSV reports, and optional local-only Ollama summaries for healthcare management reporting.
